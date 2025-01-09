@@ -1,6 +1,8 @@
 # main.py
 
 # main.py
+
+# main.py
 import random
 import time
 
@@ -41,6 +43,19 @@ def checkWin(my_grid):
   if coveredSquares == 9:
     return ";"
   return returnVal
+
+def numPossibileWins(possibileWins, my_grid):  
+  for i in range(0, 3):
+      for j in range(0, 3):
+        if my_grid[i][j] != " ":
+          continue
+        my_grid[i][j] = "O"
+        if checkWin(my_grid) == "O":
+          possibileWins += 1
+          my_grid[i][j] = " "
+        else:
+          my_grid[i][j] = " "
+  return possibileWins
   
 def comMoves():
   
@@ -56,6 +71,7 @@ def comMoves():
         return
       else:
         my_grid[i][j] = " "
+
   for i in range(0, 3):
     for j in range(0, 3):
       if my_grid[i][j] != " ":
@@ -63,6 +79,18 @@ def comMoves():
       my_grid[i][j] = "X"
       if checkWin(my_grid) == "X":
         my_grid[i][j] = "O"
+        return
+      else:
+        my_grid[i][j] = " "
+  for i in range(0, 3):
+    for j in range(0, 3):
+      if my_grid[i][j] != " ":
+        continue
+      my_grid[i][j] = "O"
+      possibileWins = 0
+      possibileWin = numPossibileWins(possibileWins, my_grid)
+      if possibileWin == 2:
+        print(checkWin(my_grid))
         return
       else:
         my_grid[i][j] = " "
@@ -139,11 +167,14 @@ def setUpGrid(grid):
 setUpGrid(my_grid)
 printBoard(my_grid)
 
-
+my_grid[1][0] = "O"
+my_grid[2][2] = "O"
 
 
 # Player Moves
 while checkWin(my_grid) == "|":
+  printBoard(my_grid)
+  
   print("Hi! Look in the big while loop at the bottom!")
   playerRow = int(input("Which row would you like to play on:"))
   playerColumn = int(input("Which column would you like to play on:"))
@@ -166,6 +197,3 @@ elif checkWin(my_grid) == "O":
   print("Wompitty, womp womp")
 else:
   print("You drawed,  🤨")
-
-
-
